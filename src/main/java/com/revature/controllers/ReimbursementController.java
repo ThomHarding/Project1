@@ -1,7 +1,7 @@
 package com.revature.controllers;
 
-import com.revature.daos.ReimbursementDAO;
-import com.revature.daos.UserDAO;
+import com.revature.DAOs.ReimbursementDAO;
+import com.revature.DAOs.UserDAO;
 import com.revature.models.Reimbursement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,12 +45,12 @@ public class ReimbursementController {
         b.get().setDescription(reimbursement.getDescription());
         b.get().setAmount(reimbursement.getAmount());
         b.get().setStatus(reimbursement.getStatus());
-        b.get().setUserId(reimbursement.getUserId());
+        b.get().setUser(reimbursement.getUser());
         reimbursementDAO.save(reimbursement);
         return ResponseEntity.ok().body(b.get());
     }
 
-    // @PatchMapping("/{reimbursementId}") optional and make his work later
+    // @PatchMapping("/{reimbursementId}") optional and make this work later
     // public ResponseEntity<Object> patchReimbursement(@RequestBody Reimbursement reimbursement, @PathVariable int reimbursementId) {
     //     Optional<Reimbursement> b = reimbursementDAO.findById(reimbursementId);
     //     if(b.isEmpty()) {

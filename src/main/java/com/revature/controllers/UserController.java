@@ -1,7 +1,7 @@
 package com.revature.controllers;
 
-import com.revature.daos.ReimbursementDAO;
-import com.revature.daos.UserDAO;
+import com.revature.DAOs.ReimbursementDAO;
+import com.revature.DAOs.UserDAO;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;

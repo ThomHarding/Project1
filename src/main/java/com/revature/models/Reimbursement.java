@@ -23,18 +23,19 @@ public class Reimbursement {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private int userId;
+    private User user;
+
 
     // Constructors
     public Reimbursement() {
     }
 
-    public Reimbursement(int reimbid, String description, int amount, String status, int userId) {
+    public Reimbursement(int reimbid, String description, int amount, String status, User user) {
         this.reimbid = reimbid;
         this.description = description;
         this.amount = amount;
         this.status = status;
-        this.userId = userId;
+        this.user = user;
     }
 
     // Getters and Setters
@@ -70,12 +71,12 @@ public class Reimbursement {
         this.status = status;
     }    
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     // Other
@@ -83,7 +84,7 @@ public class Reimbursement {
     public String toString() {
         return "Reimbursement{" +
                 "reimbid=" + reimbid +
-                ", userId=" + userId +
+                ", user=" + user +
                 ", description='" + description + '\'' +
                 ", amount='" + amount + '\'' +
                 ", status='" + status + '\'' +

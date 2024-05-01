@@ -19,16 +19,20 @@ public class User {
     private String lastName;
 
     // @Column(nullable = false)
+    private String password;
+
+    // @Column(nullable = false)
     private String role;
 
     // Constructors
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String role) {
+    public User(int userId, String firstName, String lastName, String password, String role) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.password = password;
         this.role = role;
     }
 
@@ -57,6 +61,13 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getRole() {
         return lastName;
@@ -73,6 +84,7 @@ public class User {
                 "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 '}';
     }
