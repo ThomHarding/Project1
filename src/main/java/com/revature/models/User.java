@@ -12,28 +12,34 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
-    // @Column(nullable = false)
+     @Column(nullable = false)
     private String firstName;
 
-    // @Column(nullable = false)
+     @Column(nullable = false)
     private String lastName;
 
-    // @Column(nullable = false)
+    @Column(nullable = false)
+    private String role;
+
+    @Column(nullable = false)
+    private String username;
+
+     @Column(nullable = false)
     private String password;
 
-    // @Column(nullable = false)
-    private String role;
+
 
     // Constructors
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String password, String role) {
+    public User(int userId, String firstName, String lastName, String role, String username, String password ) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
         this.role = role;
+        this.username = username;
+        this.password = password;
     }
 
     // Getters and Setters
@@ -70,11 +76,19 @@ public class User {
     }
 
     public String getRole() {
-        return lastName;
+        return role;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     // Other
@@ -84,6 +98,7 @@ public class User {
                 "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 '}';
