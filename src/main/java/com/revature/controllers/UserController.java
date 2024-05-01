@@ -26,6 +26,8 @@ public class UserController {
 
     @GetMapping
     ResponseEntity<List<User>> getAllUsers() {
+        System.out.println("hello?");
+        System.out.println(userDAO.findAll());
         return ResponseEntity.ok().body(userDAO.findAll());
     }
 

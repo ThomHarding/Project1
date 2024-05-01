@@ -6,7 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Table(name = "reimbursements")
+@Table(name = "reimbursement")
 @Component
 public class Reimbursement {
 
