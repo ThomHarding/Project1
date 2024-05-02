@@ -24,6 +24,7 @@ public class UserController {
         this.reimbursementDAO = reimbursementDAO;
     }
 
+    //see all users (manager)
     @GetMapping
     ResponseEntity<List<User>> getAllUsers() {
         System.out.println(userDAO.findAll());
@@ -74,6 +75,7 @@ public class UserController {
         return ResponseEntity.ok().body(u.get());
     }
 
+    //delete a user and cascade (manager)
     @DeleteMapping("/{userId}")
     ResponseEntity<Object> deleteUser(@PathVariable int userId) {
         Optional<User> u = userDAO.findById(userId);
