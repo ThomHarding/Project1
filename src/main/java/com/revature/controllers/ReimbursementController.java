@@ -3,7 +3,6 @@ package com.revature.controllers;
 import com.revature.DAOs.ReimbursementDAO;
 import com.revature.DAOs.UserDAO;
 import com.revature.models.Reimbursement;
-import com.revature.models.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +32,7 @@ public class ReimbursementController {
 
     //create a new reimbursement (user)
     @PostMapping
-    ResponseEntity<Reimbursement> insertUser(@RequestBody Reimbursement reimb) {
+    ResponseEntity<Reimbursement> insertReimbursement(@RequestBody Reimbursement reimb) {
         Reimbursement r = reimbursementDAO.save(reimb);
         return ResponseEntity.status(201).body(r);
     }
@@ -66,7 +65,7 @@ public class ReimbursementController {
     //see all pending reimbursements (manager)
     @GetMapping("/pending")
     public ResponseEntity<Object> getAllPendingReimbursements() {
-        System.out.println("testing getting reimb by userid while pending");
+        System.out.println("getting all pending, userid doesn't exist");
         List<Reimbursement> b = reimbursementDAO.findByStatusLike("Pending");
         System.out.println(b);
         if (b.isEmpty()) {
@@ -106,27 +105,20 @@ public class ReimbursementController {
         return ResponseEntity.ok().body(r);
     }
 
-    // @PatchMapping("/{reimbursementId}") optional and make this work later
-    // public ResponseEntity<Object> patchReimbursement(@RequestBody Reimbursement reimbursement, @PathVariable int reimbursementId) {
-    //     Optional<Reimbursement> b = reimbursementDAO.findById(reimbursementId);
-    //     if(b.isEmpty()) {
-    //         return ResponseEntity.status(404).body("No reimbursement found with ID of: " + reimbursementId);
-    //     }
-    //     if (reimbursement.getDescription() != null) {
-    //         b.get().setDescription(reimbursement.getDescription());
-    //     }
-    //     if (reimbursement.getAmount() != null) {
-    //         b.get().setAmount(reimbursement.getAmount());
-    //     }
-    //     if (reimbursement.getStatus() != null) {
-    //         b.get().setStatus(reimbursement.getStatus());
-    //     }
-    //     if (reimbursement.getUserId() != null) {
-    //         b.get().setUserId(reimbursement.getUserId());
-    //     }
-    //     reimbursementDAO.save(reimbursement);
-    //     return ResponseEntity.ok().body(reimbursement);
-    // }
+    @PatchMapping("/{reimbId}/update")
+    public ResponseEntity<Object> updateReimbursementDescription(@RequestBody Reimbursement reimbursement, @PathVariable int reimbId) {
+        Optional<Reimbursement> b = reimbursementDAO.findById(reimbId);
+        if (b.isEmpty()) {
+            return ResponseEntity.badRequest().body("Reimbursement does not exist.");
+        }
+        Reimbursement r = b.get();
+        r.setDescription(reimbursement.getDescription());
+        r.setAmount(reimbursement.getAmount());
+        r.setStatus(reimbursement.getStatus());
+        r.setUser(reimbursement.getUser());
+        reimbursementDAO.save(r);
+        return ResponseEntity.ok().body(r);
+    }
 
     @DeleteMapping("/{reimbId}")
     public ResponseEntity<Object> deleteReimbursement (@PathVariable int reimbId) {

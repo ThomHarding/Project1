@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import com.revature.DAOs.ReimbursementDAO;
 import com.revature.DAOs.UserDAO;
+import com.revature.models.DTOs.IncomingUserDTO;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,20 @@ public class UserController {
         return ResponseEntity.ok().body(u.get());
     }
 
+    @PostMapping("/login")
+    ResponseEntity<Object> loginUser(@RequestBody IncomingUserDTO incomingUserDTO) {
+        Optional<User> u = userDAO.findByUsernameAndPassword(incomingUserDTO.getUsername(), incomingUserDTO.getPassword());
+        if (u.isEmpty()) {
+            return ResponseEntity.status(404).body("User does not exist.");
+        }
+        return ResponseEntity.ok().body(u.get());
+    }
+
     //create an account (user)
     @PostMapping
     ResponseEntity<User> insertUser(@RequestBody User user) {
+        System.out.println("cmon man");
+        System.out.println(user);
         User u = userDAO.save(user);
         return ResponseEntity.status(201).body(u);
     }
