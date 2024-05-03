@@ -42,11 +42,11 @@ public class Reimbursement {
     }
 
     // Getters and Setters
-    public int getReimbursementId() {
+    public int getReimbId() {
         return reimbid;
     }
 
-    public void setReimbursementId(int reimbid) {
+    public void setReimbId(int reimbid) {
         this.reimbid = reimbid;
     }
 

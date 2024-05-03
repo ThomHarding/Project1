@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/reimbursements")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class ReimbursementController {
     private final ReimbursementDAO reimbursementDAO;
     private final UserDAO userDAO;
@@ -74,19 +75,35 @@ public class ReimbursementController {
         return ResponseEntity.ok().body(b);
     }
 
-    //"resolve a reimbursement" (manager)
-    @PutMapping("/{reimbursementId}")
-    public ResponseEntity<Object> updateReimbursement(@RequestBody Reimbursement reimbursement, @PathVariable int reimbursementId) {
-        Optional<Reimbursement> b = reimbursementDAO.findById(reimbursementId);
+    //resolve a reimbursement (manager) / change description of a reimbursement (manager)
+    @PatchMapping("/{reimbId}/approve")
+    public ResponseEntity<Object> completeReimbursement(@RequestBody Reimbursement reimbursement, @PathVariable int reimbId) {
+        Optional<Reimbursement> b = reimbursementDAO.findById(reimbId);
         if (b.isEmpty()) {
             return ResponseEntity.badRequest().body("Reimbursement does not exist.");
         }
-        b.get().setDescription(reimbursement.getDescription());
-        b.get().setAmount(reimbursement.getAmount());
-        b.get().setStatus(reimbursement.getStatus());
-        b.get().setUser(reimbursement.getUser());
-        reimbursementDAO.save(reimbursement);
-        return ResponseEntity.ok().body(b.get());
+        Reimbursement r = b.get();
+        r.setDescription(reimbursement.getDescription());
+        r.setAmount(reimbursement.getAmount());
+        r.setStatus("Approved");
+        r.setUser(reimbursement.getUser());
+        reimbursementDAO.save(r);
+        return ResponseEntity.ok().body(r);
+    }
+
+    @PatchMapping("/{reimbId}/deny")
+    public ResponseEntity<Object> denyReimbursement(@RequestBody Reimbursement reimbursement, @PathVariable int reimbId) {
+        Optional<Reimbursement> b = reimbursementDAO.findById(reimbId);
+        if (b.isEmpty()) {
+            return ResponseEntity.badRequest().body("Reimbursement does not exist.");
+        }
+        Reimbursement r = b.get();
+        r.setDescription(reimbursement.getDescription());
+        r.setAmount(reimbursement.getAmount());
+        r.setStatus("Denied");
+        r.setUser(reimbursement.getUser());
+        reimbursementDAO.save(r);
+        return ResponseEntity.ok().body(r);
     }
 
     // @PatchMapping("/{reimbursementId}") optional and make this work later
@@ -111,16 +128,16 @@ public class ReimbursementController {
     //     return ResponseEntity.ok().body(reimbursement);
     // }
 
-    @DeleteMapping("/{reimbursementId}")
-    public ResponseEntity<Object> deleteReimbursement (@PathVariable int reimbursementId) {
-        Optional<Reimbursement> b = reimbursementDAO.findById(reimbursementId);
+    @DeleteMapping("/{reimbId}")
+    public ResponseEntity<Object> deleteReimbursement (@PathVariable int reimbId) {
+        Optional<Reimbursement> b = reimbursementDAO.findById(reimbId);
         if (b.isEmpty()) {
-            return ResponseEntity.status(404).body("No reimbursement at ID " + reimbursementId + "found");
+            return ResponseEntity.status(404).body("No reimbursement at ID " + reimbId + "found");
         }
 
         Reimbursement reimbursement = b.get();
 
-        reimbursementDAO.deleteById(reimbursementId);
+        reimbursementDAO.deleteById(reimbId);
         return ResponseEntity.ok().body(reimbursement.getDescription() + " deleted from Reimbursements");
     }
 }

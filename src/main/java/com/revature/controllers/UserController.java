@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class UserController {
 
     private final UserDAO userDAO;
@@ -40,6 +41,7 @@ public class UserController {
         return ResponseEntity.ok().body(u.get());
     }
 
+    //create an account (user)
     @PostMapping
     ResponseEntity<User> insertUser(@RequestBody User user) {
         User u = userDAO.save(user);
@@ -58,7 +60,8 @@ public class UserController {
         return ResponseEntity.ok().body(u.get());
     }
 
-    @PatchMapping("/{userId}")
+    //OPTIONAL: Update an employee's role to manager (manager)
+    @PatchMapping("/{userId}/promote")
     ResponseEntity<Object> updateUserName(@PathVariable int userId, @RequestBody User user) {
         Optional<User> u = userDAO.findById(userId);
         if (u.isEmpty()) {
@@ -70,6 +73,7 @@ public class UserController {
         if (user.getLastName() != null) {
             u.get().setLastName(user.getLastName());
         }
+        u.get().setRole("Manager");
 
         userDAO.save(u.get());
         return ResponseEntity.ok().body(u.get());
