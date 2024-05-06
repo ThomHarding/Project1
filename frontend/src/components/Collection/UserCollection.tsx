@@ -55,7 +55,10 @@ export const UserCollection: React.FC = () => {
                             <button className="user-button" onClick={() => promoteUser(user)}>Promote</button>
                             : ""
                         }
+                        {user.userId !== state.userSessionData.userId ? //no deleting yourself
                         <button className="user-button" onClick={() => deleteUser(user)}>Delete</button>
+                            : ""
+                        }
                     </div>
 
             </div>

@@ -77,10 +77,11 @@ export const AllReimbursements: React.FC<any> = ({showPending}) => {
                         <button className="reimb-button" onClick={() => processReimbursement(reimb, false)}>Deny</button>
                     </div>
                      : 
+                    ''}
                     <div>
                         <input type="text" placeholder="change description" name="descriptionChange" onChange={storeValues}/>
                         <button className="reimb-button" onClick={() => updateReimbursement(reimb)}>Update</button>
-                    </div>}
+                    </div>
                 </div>
            )}
 
