@@ -99,8 +99,7 @@ public class UserController {
             return ResponseEntity.status(404).body("User does not exist.");
         }
         userDAO.deleteById(userId);
-        return ResponseEntity.ok().body("Deleted user " +
-                u.get().getFirstName() + " " + u.get().getLastName() + " and all associated reimbursements.");
+        return ResponseEntity.ok().body(u.get());
     }
 
     /*
